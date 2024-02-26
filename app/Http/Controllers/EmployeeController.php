@@ -14,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view');
+        $this->authorize('view', Employee::class);
 
         $search = $request->get('search');
 
@@ -59,7 +59,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        $this->authorize('view');
+        $this->authorize('view', Employee::class);
 
         return view('employees.show', compact('employee'));
     }

@@ -19,7 +19,7 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('view');
+        $this->authorize('view', Company::class);
 
         $search = $request->get('search');
 
@@ -62,7 +62,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        $this->authorize('view');
+        $this->authorize('view', Company::class);
 
         return view('companies.show', compact('company'));
     }
