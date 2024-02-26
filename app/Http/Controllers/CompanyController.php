@@ -37,7 +37,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $this->authorize('create');
+        $this->authorize('create', Company::class);
 
         return view('companies.create');
     }
@@ -72,7 +72,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        $this->authorize('update');
+        $this->authorize('update', Company::class);
 
         return view('companies.edit', compact('company'));
     }

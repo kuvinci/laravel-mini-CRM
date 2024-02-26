@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Employee::class, 'employee');
+    }
+
     /**
      * Display a listing of the employees.
      */
@@ -34,7 +40,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $this->authorize('create');
+        $this->authorize('create', Employee::class);
 
         $companies = Company::all();
         return view('employees.create', compact('companies'));
@@ -69,7 +75,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        $this->authorize('update');
+        $this->authorize('update', Employee::class);
 
         $companies = Company::all();
         return view('employees.edit', compact('employee', 'companies'));
@@ -93,7 +99,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        $this->authorize('delete');
+        $this->authorize('delete', Employee::class);
 
         $employee->delete();
         return redirect()
