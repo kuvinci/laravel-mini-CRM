@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'is_admin' => true,
             'name' => $faker->name(),
             'email' => 'admin@admin.com',
-            'password' => Hash::make('admin'),
+            'password' => Hash::make('password'),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
