@@ -11,10 +11,17 @@ class CompanyController extends Controller
     /**
      * Display a listing of the companies.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::all();
-        return view('companies.index', compact('companies'));
+        $search = $request->get('search');
+
+        $companies = Company::when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%')
+                ->orWhere('website', 'like', '%'.$search.'%');
+        })->paginate(10);
+
+        return view('companies.index', compact('companies', 'search'));
     }
 
     /**
