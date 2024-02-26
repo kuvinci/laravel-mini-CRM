@@ -82,8 +82,6 @@ class CompanyController extends Controller
      */
     public function update(StoreCompanyRequest $request, Company $company)
     {
-        $this->authorize('update');
-
         $data = $request->validated();
 
         $company->update($data);
@@ -97,6 +95,8 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+        $this->authorize('delete');
+
         $company->delete();
         return redirect()
             ->route('companies.index')

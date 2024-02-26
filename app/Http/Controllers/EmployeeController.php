@@ -14,6 +14,8 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('view');
+
         $search = $request->get('search');
 
         $employees = Employee::when($search, function ($query) use ($search) {
@@ -32,6 +34,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
+
         $companies = Company::all();
         return view('employees.create', compact('companies'));
     }
@@ -55,6 +59,8 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        $this->authorize('view');
+
         return view('employees.show', compact('employee'));
     }
 
@@ -63,6 +69,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
+        $this->authorize('update');
+
         $companies = Company::all();
         return view('employees.edit', compact('employee', 'companies'));
     }
@@ -70,17 +78,11 @@ class EmployeeController extends Controller
     /**
      * Update the specified employee in the database.
      */
-    public function update(Request $request, Employee $employee)
+    public function update(StoreEmployeeRequest $request, Employee $employee)
     {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'company_id' => 'required|exists:companies,id',
-            'email' => 'nullable|email',
-            'phone' => 'nullable'
-        ]);
+        $data = $request->validated();
 
-        $employee->update($request->all());
+        $employee->update($data);
         return redirect()
             ->route('employees.index')
             ->with('success','Employee updated successfully.');
@@ -91,6 +93,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        $this->authorize('delete');
+
         $employee->delete();
         return redirect()
             ->route('employees.index')
