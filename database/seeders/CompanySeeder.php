@@ -15,7 +15,7 @@ class CompanySeeder extends Seeder {
     {
         $faker = Faker::create();
 
-        foreach (range(1, 10) as $index) {
+        for ($i = 0; $i < 30; $i++) {
             DB::table('companies')->insert([
                 'name' => $faker->company,
                 'email' => $faker->unique()->companyEmail,

@@ -18,7 +18,7 @@ class EmployeeSeeder extends Seeder
 
         $companies = DB::table('companies')->pluck('id')->toArray();
 
-        foreach (range(1, 50) as $index) {
+        for ($i = 0; $i < 100; $i++) {
             DB::table('employees')->insert([
                 'company_id' => $faker->randomElement($companies),
                 'first_name' => $faker->firstName,
