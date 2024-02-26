@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEmployeeRequest;
 use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -29,17 +30,12 @@ class EmployeeController extends Controller
     /**
      * Store a newly created employee in the database.
      */
-    public function store(Request $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        $validatedData = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'company_id' => 'required|exists:companies,id',
-            'email' => 'nullable|email',
-            'phone' => 'nullable'
-        ]);
+        $data = $request->validated();
 
-        Employee::create($validatedData);
+        Employee::create($data);
+
         return redirect()
             ->route('employees.index')
             ->with('success','Employee created successfully.');
