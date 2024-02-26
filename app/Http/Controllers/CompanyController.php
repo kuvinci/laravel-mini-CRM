@@ -8,11 +8,19 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Company::class, 'company');
+    }
+
     /**
      * Display a listing of the companies.
      */
     public function index(Request $request)
     {
+        $this->authorize('view');
+
         $search = $request->get('search');
 
         $companies = Company::when($search, function ($query) use ($search) {
@@ -29,6 +37,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('companies.create');
     }
 
@@ -52,6 +62,8 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
+        $this->authorize('view');
+
         return view('companies.show', compact('company'));
     }
 
@@ -60,22 +72,21 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
+        $this->authorize('update');
+
         return view('companies.edit', compact('company'));
     }
 
     /**
      * Update the specified company in the database.
      */
-    public function update(Request $request, Company $company)
+    public function update(StoreCompanyRequest $request, Company $company)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'logo' => 'nullable|image|dimensions:min_width=100,min_height=100',
-            'website' => 'nullable|url'
-        ]);
+        $this->authorize('update');
 
-        $company->update($request->all());
+        $data = $request->validated();
+
+        $company->update($data);
         return redirect()
             ->route('companies.index')
             ->with('success','Company updated successfully.');
