@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,11 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome');
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
@@ -27,6 +24,5 @@ Route::view('profile', 'profile')
 
 require __DIR__.'/auth.php';
 
-// Generates RESTful Routes like /companies/create OR /companies/{company}/{edit} and so on
 Route::resource('companies', CompanyController::class);
 Route::resource('employees', EmployeeController::class);

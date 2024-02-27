@@ -25,11 +25,13 @@ class EmployeeController extends Controller
         $search = $request->get('search');
 
         $employees = Employee::when($search, function ($query) use ($search) {
-            return $query->where('name', 'like', '%'.$search.'%')
-                ->orWhere('first_name', 'like', '%'.$search.'%')
+            return $query->where('first_name', 'like', '%'.$search.'%')
                 ->orWhere('last_name', 'like', '%'.$search.'%')
                 ->orWhere('email', 'like', '%'.$search.'%')
-                ->orWhere('phone', 'like', '%'.$search.'%');
+                ->orWhere('phone', 'like', '%'.$search.'%')
+                ->orWhereHas('company', function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%');
+                });
         })->paginate(10);
 
         return view('employees.index', compact('employees', 'search'));
