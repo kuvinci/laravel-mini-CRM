@@ -11,9 +11,3 @@ This project is a mini-CRM system built with the Laravel TALL stack (TailwindCSS
   - Please check database/seeders/UserSeeder.php for admin and regular user credentials
 - Serve the application using `php artisan serve` and access it at `http://localhost:8000`.
 - Run `php artisan storage:link` if company logos aren't accessible.
-
-## Contributions
-Contributions are welcome! If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
-
-## Licensing
-The project is open-sourced under the [MIT license](https://opensource.org/licenses/MIT).
