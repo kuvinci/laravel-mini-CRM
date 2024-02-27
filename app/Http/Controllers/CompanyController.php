@@ -95,7 +95,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        $this->authorize('delete');
+        $this->authorize('delete', Company::class);
 
         $company->delete();
         return redirect()

@@ -1,5 +1,4 @@
 @include('layouts.header')
-<main>
     <div class="container mx-auto mt-8">
         <div class="bg-gray-800 p-5 rounded-lg shadow-lg">
             <form action="{{ route('employees.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
@@ -43,6 +42,5 @@
             </form>
         </div>
     </div>
-</main>
 
 @include('layouts.footer')
